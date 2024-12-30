@@ -17,11 +17,14 @@ const Navbar = () => {
   const currentRouter = usePathname();
 
   return (
-    <nav className="w-full">
+    <nav
+      className="fixed top-0 left-0 right-0 w-full z-50
+    text-white drop-shadow-xl"
+    >
       <Flex
         justify="center"
         gapX="9"
-        className="py-4 bg-gray-200 max-w-2xl mx-auto mt-4 rounded-2xl items-center"
+        className="py-4 bg-white max-w-2xl mx-auto mt-4 rounded-2xl items-center"
       >
         {Links.slice(0, 2).map((link) => (
           <Link
