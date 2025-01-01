@@ -4,6 +4,7 @@ import "./globals.css";
 import "@radix-ui/themes/styles.css";
 import { Theme } from "@radix-ui/themes";
 import Navbar from "./Navbar";
+import Footer from "./Footer";
 // import { Theme } from "@radix-ui/themes";
 
 const geistSans = localFont({
@@ -35,6 +36,7 @@ export default function RootLayout({
         <Theme>
           <Navbar />
           {children}
+          <Footer />
         </Theme>
       </body>
     </html>

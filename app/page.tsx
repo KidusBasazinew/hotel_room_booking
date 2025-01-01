@@ -18,6 +18,10 @@ import Link from "next/link";
 import Date_Picker from "./components/Date_Picker";
 import { useState } from "react";
 
+import rooms from "../data/rooms.json";
+import { Room } from "@/Types/Room";
+import RoomCard from "./components/RoomCard";
+
 const images = [
   "/banner/image_01.jpg",
   "/banner/image_02.jpg",
@@ -77,30 +81,8 @@ export default function Home() {
           </Link>
         </div>
       </div>
-      <section id="services" className="max-w-5xl mx-auto py-10">
-        <Heading size="8" className="mx-6 text-center md:text-start py-7">
-          Our Services
-        </Heading>
-        <div className="grid grid-cols-1 mx-6 md:mx-6 sm:grid-cols-2 md:grid-cols-3 gap-6">
-          {ServicesList.map((list, index) =>
-            index === 0 ? (
-              <ServicesGridCard
-                key={list.label}
-                label={list.label}
-                imageSrc={list.imageSrc}
-                rowSpan="row-span-2"
-              />
-            ) : (
-              <ServicesGridCard
-                key={list.label}
-                label={list.label}
-                imageSrc={list.imageSrc}
-              />
-            )
-          )}
-        </div>
-      </section>
-      <section className="bg-[#E9F3F6] max-w-5xl py-10 rounded-xl mx-auto">
+
+      <section className="bg-[#E9F3F6] max-w-5xl py-10 rounded-xl mx-auto mt-14 mb-14">
         <div className="py-3 mb-10">
           <Heading size="8" className="mx-6 text-center">
             Book a Room
@@ -177,6 +159,73 @@ export default function Home() {
             </Button>
           </div>
         </form>
+      </section>
+      <section id="services" className="bg-[#F3F3F3]">
+        <div className="max-w-5xl mx-auto py-10">
+          <Heading size="8" className="mx-6 text-center md:text-start mb-10">
+            Our Services
+          </Heading>
+          <div className="grid grid-cols-1 mx-6 md:mx-6 sm:grid-cols-2 md:grid-cols-3 gap-6">
+            {ServicesList.map((list, index) =>
+              index === 0 ? (
+                <ServicesGridCard
+                  key={list.label}
+                  label={list.label}
+                  imageSrc={list.imageSrc}
+                  rowSpan="row-span-2"
+                />
+              ) : (
+                <ServicesGridCard
+                  key={list.label}
+                  label={list.label}
+                  imageSrc={list.imageSrc}
+                />
+              )
+            )}
+          </div>
+        </div>
+      </section>
+      <section className="max-w-5xl mx-auto px-4 mt-12">
+        <div className="flex justify-between items-center py-10">
+          <div className="flex flex-col gap-y-4">
+            <h3 className="text-2xl text-sky-600">Special Offers</h3>
+            <h1 className="text-4xl font-semibold">Best offer of the month</h1>
+            <p className="max-w-2xl font-light">
+              Experience Fantastic Benefits and Obtain Better Rates When You
+              Make a Direct Booking on Our Official Website
+            </p>
+          </div>
+          <Button size="4">View All</Button>
+        </div>
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 justify-items-center">
+          {rooms.slice(0, 3).map((room: Room) => (
+            <div
+              key={room.$id}
+              className="flex flex-col gap-y-2 p-6 bg-white rounded-2xl shadow-xl shadow-gray-400 w-full max-w-sm hover:scale-105 transition-transform"
+            >
+              <Image
+                src={`/rooms/${room.image}`}
+                width={400}
+                height={250}
+                alt={room.name}
+                className="rounded-xl"
+              />
+              <p className="text-gray-500">Room</p>
+              <div className="flex justify-between items-center">
+                <h3 className="font-semibold">{room.name}</h3>
+                <div className="flex items-center gap-x-1">
+                  <PersonIcon />
+                  <p>{room.capacity}</p>
+                </div>
+              </div>
+              <p className="text-sm font-light truncate">{room.description}</p>
+              <h2 className="text-3xl text-center mt-6 font-bold">
+                ${room.price_per_hour}
+                <span className="text-xs font-light">/night</span>
+              </h2>
+            </div>
+          ))}
+        </div>
       </section>
     </section>
   );
