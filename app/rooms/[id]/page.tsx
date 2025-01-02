@@ -4,7 +4,7 @@ import getSingleRoom from "@/app/actions/getSingleRoom";
 import { CiLocationOn, CiMoneyBill } from "react-icons/ci";
 import { IoCalendarNumberOutline, IoPersonOutline } from "react-icons/io5";
 import { MdOutlineEventAvailable } from "react-icons/md";
-import { FaCheck } from "react-icons/fa";
+import { FaCheck, FaChevronLeft } from "react-icons/fa";
 import { Button } from "@radix-ui/themes";
 import BookingForm from "@/app/components/BookingForm";
 import { Room } from "@/Types/Room";
@@ -25,6 +25,10 @@ const page = async ({ params }: { params: { id: string } }) => {
           alt={room.name}
         />
       </div>
+      <Link href="/" className="col-span-1 md:col-span-2 w-full">
+        <FaChevronLeft className="inline mr-1" />
+        <span className="ml-2">Back to Rooms</span>
+      </Link>
 
       {/* Room Details Section */}
       <div className="p-4">
@@ -106,10 +110,7 @@ const page = async ({ params }: { params: { id: string } }) => {
           </Button>
         </Link>
       </div>
-      <section
-        id="book"
-        className="col-span-1 md:col-span-2 w-full h-[calc(100vh*2/3)] overflow-hidden"
-      >
+      <section id="book" className="col-span-1 md:col-span-2 w-full">
         <BookingForm room={room} />
       </section>
     </div>

@@ -4,7 +4,7 @@ import React from "react";
 
 const BookingForm = ({ room }: { room: Room }) => {
   return (
-    <div className="mt-6">
+    <div className="mt-6 mx-4">
       <h2 className="text-xl font-bold">Book this Room</h2>
       <form className="mt-4">
         <input type="hidden" name="room_id" value={room.$id} />
