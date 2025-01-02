@@ -6,9 +6,12 @@ import { IoCalendarNumberOutline, IoPersonOutline } from "react-icons/io5";
 import { MdOutlineEventAvailable } from "react-icons/md";
 import { FaCheck } from "react-icons/fa";
 import { Button } from "@radix-ui/themes";
+import BookingForm from "@/app/components/BookingForm";
+import { Room } from "@/Types/Room";
+import Link from "next/link";
 
 const page = async ({ params }: { params: { id: string } }) => {
-  const room = await getSingleRoom(params.id);
+  const room = (await getSingleRoom(params.id)) as Room;
 
   return (
     <div className="grid grid-cols-1 md:grid-cols-2 gap-4 max-w-5xl mx-auto">
@@ -59,17 +62,16 @@ const page = async ({ params }: { params: { id: string } }) => {
         </div>
         <div className="bg-[#E9F3F6] rounded-md p-4">
           <h3 className="text-blue-950 font-bold ">Room Information</h3>
-          <p>
-            {room.amenities
-              .split(", ")
-              .map((item: string) => item.trim())
-              .map((amenitile: string) => (
-                <div key={amenitile} className="flex items-center gap-x-2 ml-4">
-                  <FaCheck />
-                  <li className="text-blue-900 list-none ">{amenitile}</li>
-                </div>
-              ))}
-          </p>
+
+          {room.amenities
+            .split(", ")
+            .map((item: string) => item.trim())
+            .map((amenitile: string) => (
+              <div key={amenitile} className="flex items-center gap-x-2 ml-4">
+                <FaCheck />
+                <li className="text-blue-900 list-none ">{amenitile}</li>
+              </div>
+            ))}
         </div>
       </div>
 
@@ -98,10 +100,18 @@ const page = async ({ params }: { params: { id: string } }) => {
           </div>
           <p className="truncate">{room.description}</p>
         </div>
-        <Button size="4" className="!mt-2 !w-full">
-          Add Now
-        </Button>
+        <Link href="#book">
+          <Button size="4" className="!mt-2 !w-full">
+            Book Room
+          </Button>
+        </Link>
       </div>
+      <section
+        id="book"
+        className="col-span-1 md:col-span-2 w-full h-[calc(100vh*2/3)] overflow-hidden"
+      >
+        <BookingForm room={room} />
+      </section>
     </div>
   );
 };

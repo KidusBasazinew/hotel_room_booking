@@ -1,11 +1,11 @@
 export type Room = {
   $id: string;
-  user_id: string;
+  user_id?: string;
   name: string;
   description: string;
-  sqft: number;
+  sqft?: number;
   capacity: number;
-  location: string;
+  location?: string;
   address: string;
   amenities: string;
   availability: string;
