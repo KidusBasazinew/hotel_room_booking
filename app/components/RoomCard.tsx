@@ -1,11 +1,26 @@
-// sections/RoomCard.tsx (Client Component)
 "use client";
 
 import Image from "next/image";
 import { PersonIcon } from "@radix-ui/react-icons";
 import { Room } from "@/Types/Room";
 
-export default function RoomCard({ room }: { room: Room }) {
+interface RoomCardProps {
+  room: {
+    $id: string;
+    name: string;
+    description: string;
+    sqft?: number;
+    capacity: number;
+    location?: string;
+    address: string;
+    amenities: string;
+    availability: string;
+    price_per_hour: number;
+    image: string;
+  };
+}
+
+export default function RoomCard({ room }: RoomCardProps) {
   return (
     <div className="flex flex-col gap-y-2 p-6 bg-white rounded-2xl shadow-xl shadow-gray-400 w-full max-w-sm hover:scale-105 transition-transform">
       <Image

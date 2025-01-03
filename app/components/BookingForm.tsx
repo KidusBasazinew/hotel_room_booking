@@ -2,7 +2,11 @@ import { Room } from "@/Types/Room";
 import { Button } from "@radix-ui/themes";
 import React from "react";
 
-const BookingForm = ({ room }: { room: Room }) => {
+interface Props {
+  room: Room;
+}
+
+const BookingForm = ({ room }: Props) => {
   return (
     <div className="mt-6 mx-4">
       <h2 className="text-xl font-bold">Book this Room</h2>
