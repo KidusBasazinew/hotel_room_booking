@@ -1,8 +1,8 @@
 "use client";
 import createRoom from "@/app/actions/createRoom";
-import { Button } from "@radix-ui/themes";
+import { Button, Spinner } from "@radix-ui/themes";
 import { useRouter } from "next/navigation";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useFormState } from "react-dom";
 
 const AddRome = () => {
@@ -10,9 +10,15 @@ const AddRome = () => {
 
   const router = useRouter();
 
+  const [isCreating, setCreating] = useState(false);
+
   useEffect(() => {
-    if (state.error) console.log(state.error);
+    if (state.error) {
+      setCreating(false);
+      console.log(state.error);
+    }
     if (state.success) {
+      setCreating(true);
       console.log("Room created successfully!");
       router.push("/");
     }
@@ -182,8 +188,13 @@ const AddRome = () => {
 
           {/* Submit Button */}
           <div className="sm:col-span-2 text-center">
-            <Button size="4" type="submit" className="!w-full">
-              Save Room
+            <Button
+              size="4"
+              disabled={isCreating}
+              type="submit"
+              className="!w-full"
+            >
+              Save Room {isCreating && <Spinner />}
             </Button>
           </div>
         </form>

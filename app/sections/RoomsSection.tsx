@@ -26,42 +26,63 @@ const RoomsSection = async () => {
         <Button size="4">View All</Button>
       </div>
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 justify-items-center">
-        {rooms ? (
+        {rooms && rooms.length > 0 ? (
           rooms.slice(0, 3).map((room) => {
             const imageUrl = room.image
               ? `https://cloud.appwrite.io/v1/storage/buckets/${bucketId}/files/${room.image}/view?project=${projectId}`
               : "/images/no-image.jpg";
+
             return (
               <Link key={room.$id} href={`/rooms/${room.$id}`}>
-                <div className="flex flex-col gap-y-2 p-6 bg-white rounded-2xl shadow-xl shadow-gray-400 w-full max-w-sm hover:scale-105 transition-transform">
+                <div
+                  key={room.$id}
+                  className="flex flex-col bg-white rounded-lg shadow-lg overflow-hidden w-full max-w-xs h-[400px] hover:scale-105 transition-transform duration-300"
+                >
+                  {/* Room Image */}
                   <Image
                     src={imageUrl}
+                    alt={room.name}
                     width={400}
                     height={250}
-                    alt={room.name}
-                    className="rounded-xl"
+                    className="w-full h-44 object-cover"
                   />
-                  <p className="text-gray-500">Room</p>
-                  <div className="flex justify-between items-center">
-                    <h3 className="font-semibold">{room.name}</h3>
-                    <div className="flex items-center gap-x-1">
-                      <PersonIcon />
-                      <p>{room.capacity}</p>
+                  {/* Room Details */}
+                  <div className="p-4 flex flex-col justify-between flex-grow">
+                    <div>
+                      <p>Room</p>
+                      <div className="flex justify-between items-center">
+                        <h3 className="text-lg font-semibold text-gray-800">
+                          {room.name}
+                        </h3>
+                        <div className="flex justify-center items-center">
+                          <p className="text-gray-600 text-sm">
+                            Capacity: <strong>{room.capacity}</strong>
+                          </p>
+                          <PersonIcon />
+                        </div>
+                      </div>
+                      <p className="text-sm text-gray-500 mt-4 line-clamp-3">
+                        {room.description}
+                      </p>
+                    </div>
+                    <div className="mt-4">
+                      <h2 className="text-4xl text-center font-bold text-sky-600">
+                        ${room.price_per_hour}
+                        <span className="text-sm text-gray-500 font-light">
+                          {" "}
+                          / night
+                        </span>
+                      </h2>
                     </div>
                   </div>
-                  <p className="text-sm font-light truncate">
-                    {room.description}
-                  </p>
-                  <h2 className="text-3xl text-center mt-6 font-bold">
-                    ${room.price_per_hour}
-                    <span className="text-xs font-light">/night</span>
-                  </h2>
                 </div>
               </Link>
             );
           })
         ) : (
-          <h2>No room found!</h2>
+          <h2 className="text-center text-xl text-gray-600">
+            No rooms available!
+          </h2>
         )}
       </div>
     </section>

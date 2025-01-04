@@ -4,21 +4,32 @@ import getSingleRoom from "@/app/actions/getSingleRoom";
 import { CiLocationOn, CiMoneyBill } from "react-icons/ci";
 import { IoCalendarNumberOutline, IoPersonOutline } from "react-icons/io5";
 import { MdOutlineEventAvailable } from "react-icons/md";
-import { FaCheck, FaChevronLeft } from "react-icons/fa";
-import { Button } from "@radix-ui/themes";
+import { FaChevronLeft } from "react-icons/fa";
 import BookingForm from "@/app/components/BookingForm";
 import { Room } from "@/Types/Room";
 import Link from "next/link";
+import DeleteRoomButton from "@/app/components/DeleteRoomButton";
+import getMyRooms from "@/app/actions/getMyRooms";
+import { Button } from "@radix-ui/themes";
+import { Check } from "lucide-react";
 
 const page = async ({ params }: { params: { id: string } }) => {
   const room = (await getSingleRoom(params.id)) as Room;
 
+  const rooms = await getMyRooms();
+
+  const bucketId = process.env.NEXT_PUBLIC_APPWRITE_ROOMS_STORAGE_BOOKING;
+  const projectId = process.env.NEXT_PUBLIC_APPWRITE_PROJECT;
+  const imageUrl = room.image
+    ? `https://cloud.appwrite.io/v1/storage/buckets/${bucketId}/files/${room.image}/view?project=${projectId}`
+    : "/images/no-image.jpg";
+
   return (
     <div className="grid grid-cols-1 md:grid-cols-2 gap-4 max-w-5xl mx-auto">
       {/* Image Section with 2/3 of the height */}
-      <div className="col-span-1 md:col-span-2 bg-red-400 w-full h-[calc(100vh*2/3)] overflow-hidden">
+      <div className="col-span-1 md:col-span-2 w-full h-[calc(100vh*2/3)] overflow-hidden">
         <Image
-          src={`/rooms/${room.image}`}
+          src={imageUrl}
           width={1200}
           height={780}
           className="object-cover w-full h-full"
@@ -72,7 +83,7 @@ const page = async ({ params }: { params: { id: string } }) => {
             .map((item: string) => item.trim())
             .map((amenitile: string) => (
               <div key={amenitile} className="flex items-center gap-x-2 ml-4">
-                <FaCheck />
+                <Check />
                 <li className="text-blue-900 list-none ">{amenitile}</li>
               </div>
             ))}
@@ -81,7 +92,7 @@ const page = async ({ params }: { params: { id: string } }) => {
 
       <div className="space-y-2 p-4">
         <Image
-          src={`/rooms/${room.image}`}
+          src={imageUrl}
           width={1080}
           height={700}
           alt=""
@@ -104,11 +115,13 @@ const page = async ({ params }: { params: { id: string } }) => {
           </div>
           <p className="truncate">{room.description}</p>
         </div>
-        <Link href="#book">
-          <Button size="4" className="!mt-2 !w-full">
-            Book Room
+        {rooms.find((rom) => rom.$id === room.$id) ? (
+          <DeleteRoomButton roomId={room.$id} />
+        ) : (
+          <Button size="3" className="!w-full">
+            View Room
           </Button>
-        </Link>
+        )}
       </div>
       <section id="book" className="col-span-1 md:col-span-2 w-full">
         <BookingForm room={room} />
