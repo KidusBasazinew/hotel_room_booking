@@ -3,11 +3,11 @@ import React from "react";
 import ServicesGridCard from "../components/ServicesGridCard";
 
 const ServicesList = [
-  { label: "Rooms", imageSrc: "/dining.jpg" },
   { label: "Dining", imageSrc: "/dining.jpg" },
-  { label: "Service & Facilities", imageSrc: "/dining.jpg" },
-  { label: "Conferences & Meetings", imageSrc: "/dining.jpg" },
-  { label: "Wedding Package", imageSrc: "/dining.jpg" },
+  { label: "Room", imageSrc: "/rooms/room-2.jpg" },
+  { label: "Service & Facilities", imageSrc: "/rooms/service-facilitys.jpg" },
+  { label: "Conferences & Meetings", imageSrc: "/rooms/room-3.jpg" },
+  { label: "Wedding Package", imageSrc: "/rooms/wedding.jpg" },
 ];
 
 const ServicesSection = () => {
