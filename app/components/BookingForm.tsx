@@ -1,16 +1,48 @@
+"use client";
 import { Room } from "@/Types/Room";
 import { Button } from "@radix-ui/themes";
-import React from "react";
+import { useRouter } from "next/navigation";
+import React, { useEffect, useState } from "react";
+import { useFormState } from "react-dom";
+import bookRoom from "../actions/bookRoom";
 
 interface Props {
   room: Room;
 }
 
+const initial = { error: "", status: "" };
+
 const BookingForm = ({ room }: Props) => {
+  const [state, formAction] = useFormState(bookRoom, initial);
+  const [errorMessage, setErrorMessage] = useState("");
+  const [successMessage, setSuccessMessage] = useState("");
+
+  const router = useRouter();
+
+  useEffect(() => {
+    if (state.error) {
+      setErrorMessage(state.error);
+    }
+    if (state.success) {
+      setSuccessMessage("Room has been booked!");
+      setTimeout(() => {
+        router.push("/bookings");
+      }, 2000); // Redirect after 2 seconds for a smooth transition
+    }
+  }, [state, router]);
+
+  useEffect(() => {
+    if (state.error) console.log(state.error);
+    if (state.success) {
+      console.log("Room has been booked!");
+      router.push("/bookings");
+    }
+  }, [state, router]);
+
   return (
     <div className="mt-6 mx-4">
       <h2 className="text-xl font-bold">Book this Room</h2>
-      <form className="mt-4">
+      <form action={formAction} className="mt-4">
         <input type="hidden" name="room_id" value={room.$id} />
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
           <div>
@@ -75,6 +107,8 @@ const BookingForm = ({ room }: Props) => {
           </div>
         </div>
 
+        <p className="text-red-500 mt-2">{errorMessage}</p>
+        <p className="text-green-500">{successMessage}</p>
         <div className="mt-6">
           <Button type="submit" size="4" className="!w-full">
             Book Room

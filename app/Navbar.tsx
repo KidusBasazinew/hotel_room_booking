@@ -15,7 +15,7 @@ const Links = [
   { label: "Home", href: "/" },
   { label: "About", href: "/about" },
   { label: "Rooms", href: "/rooms" },
-  { label: "Contact", href: "/contacts" },
+  { label: "Bookings", href: "/bookings" },
   { label: "My Rooms", href: "/rooms/my" },
   { label: "Add Room", href: "/rooms/add" },
 ];
