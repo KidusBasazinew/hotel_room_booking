@@ -1,0 +1,82 @@
+[
+  {
+    "id": 1,
+    "name": "Truelock Alric",
+    "location": "United States",
+    "rating": 4.0,
+    "rank": "#1",
+    "image": "/authers/female_01.jpg"
+  },
+  {
+    "id": 2,
+    "name": "Birrell Chariot",
+    "location": "Canada",
+    "rating": 4.8,
+    "rank": "#2",
+    "image": "/authers/male_01.jpg"
+  },
+  {
+    "id": 3,
+    "name": "Foulcher Nathanil",
+    "location": "United Kingdom",
+    "rating": 3.9,
+    "rank": "#3",
+    "image": "/authers/female_02.jpg"
+  },
+  {
+    "id": 4,
+    "name": "Falconar Agnes",
+    "location": "Australia",
+    "rating": 4.9,
+    "rank": "#4",
+    "image": "/authers/male_02.jpg"
+  },
+  {
+    "id": 5,
+    "name": "Tousy Vita",
+    "location": "Germany",
+    "rating": 4.9,
+    "rank": "#5",
+    "image": "/authers/female_03.jpg"
+  },
+  {
+    "id": 6,
+    "name": "Friar Donna",
+    "location": "France",
+    "rating": 4.5,
+    "rank": "#6",
+    "image": "/authers/male_03.jpg"
+  },
+  {
+    "id": 7,
+    "name": "Royal Sergei",
+    "location": "Russia",
+    "rating": 4.4,
+    "rank": "#7",
+    "image": "/authers/female_04.jpg"
+  },
+  {
+    "id": 8,
+    "name": "Slete Claudetta",
+    "location": "Italy",
+    "rating": 4.7,
+    "rank": "#8",
+    "image": "/authers/male_04.jpg"
+  },
+  {
+    "id": 9,
+    "name": "Pillifant Vern",
+    "location": "Spain",
+    "rating": 4.1,
+    "rank": "#9",
+    "image": "/authers/female_01.jpg"
+  },
+  {
+    "id": 10,
+    "name": "Fones Mimi",
+    "location": "Japan",
+    "rating": 5.0,
+    "rank": "#10",
+    "image": "/authers/female_03.jpg"
+  }
+]

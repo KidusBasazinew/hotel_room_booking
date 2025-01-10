@@ -1,12 +1,13 @@
 "use server";
 import { createAdminClient } from "@/config/appwrite";
 import checkAuth from "./checkAuth";
-import { ID } from "node-appwrite";
+import { ID, Models } from "node-appwrite";
 import { revalidatePath } from "next/cache";
 
 type CreateRoomResponse = {
   success?: boolean;
   error?: string;
+  roomData?: Models.Document;
 };
 
 type FormDataType = {
@@ -85,6 +86,7 @@ async function createRoom(
 
     return {
       success: true,
+      roomData: newRoom,
     };
   } catch (error: any) {
     console.log(error);

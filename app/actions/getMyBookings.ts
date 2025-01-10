@@ -9,7 +9,7 @@ import checkAuth from "./checkAuth";
 async function getMyBookings() {
   const sessionCookie = cookies().get("appwrite-session");
   if (!sessionCookie) {
-    redirect("/login");
+    redirect("/sign-in");
   }
 
   const databaseId = process.env.NEXT_PUBLIC_APPWRITE_DATABASE;

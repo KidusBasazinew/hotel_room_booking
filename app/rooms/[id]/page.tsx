@@ -36,7 +36,7 @@ const page = async ({ params }: { params: { id: string } }) => {
           alt={room.name}
         />
       </div>
-      <Link href="/" className="col-span-1 md:col-span-2 w-full">
+      <Link href="/rooms" className="col-span-1 md:col-span-2 w-full mt-2">
         <FaChevronLeft className="inline mr-1" />
         <span className="ml-2">Back to Rooms</span>
       </Link>

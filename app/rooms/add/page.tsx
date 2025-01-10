@@ -20,7 +20,25 @@ const AddRome = () => {
     if (state.success) {
       setCreating(true);
       console.log("Room created successfully!");
-      router.push("/");
+
+      // Assuming state.success contains the created room data
+      const roomData = state.roomData!; // Ensure this contains the room's data
+
+      // Serialize the room data into a query string
+      const queryParams = new URLSearchParams({
+        roomName: roomData.name,
+        description: roomData.description,
+        sqft: roomData.sqft.toString(),
+        capacity: roomData.capacity.toString(),
+        pricePerHour: roomData.price_per_hour.toString(),
+        address: roomData.address,
+        location: roomData.location,
+        availability: roomData.availability,
+        amenities: roomData.amenities,
+        imageId: roomData.image,
+      }).toString();
+      // Redirect to the "Thanks" page with query parameters
+      router.push(`/thanks?${queryParams}`);
     }
   }, [state, router]);
 

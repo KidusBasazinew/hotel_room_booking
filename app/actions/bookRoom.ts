@@ -12,7 +12,7 @@ import checkRoomAvailability from "./checkRoomAvailability";
 async function bookRoom(previousState: unknown, formData: FormData) {
   const sessionCookie = cookies().get("appwrite-session");
   if (!sessionCookie) {
-    redirect("/login");
+    redirect("/sign-in");
   }
 
   // Use the checkAuth function to get the user

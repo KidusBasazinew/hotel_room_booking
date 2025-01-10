@@ -5,6 +5,7 @@ import { Button } from "@radix-ui/themes";
 import { PersonIcon } from "@radix-ui/react-icons";
 import getAllRooms from "../actions/getAllRooms";
 import Link from "next/link";
+import RoomCard from "../components/RoomCard";
 
 const page = async () => {
   const rooms = await getAllRooms();
@@ -14,22 +15,25 @@ const page = async () => {
 
   return (
     <>
+      {/* Banner Section */}
       <div className="relative">
         <Image
           src="/banner/image_03.jpg"
           className="w-full h-96 object-cover"
           alt=""
           width={1200}
-          height={100}
+          height={200}
         />
         <div className="absolute inset-0 bg-black opacity-40"></div>
         <div className="flex flex-col items-center gap-y-4 absolute mt-10 top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2">
-          <h1 className="font-bold text-5xl text-white text-center">
+          <h1 className="font-bold text-4xl md:text-5xl text-white text-center">
             Discover Your Perfect Stay with Us
           </h1>
-          <Button size="4">Get Start</Button>
+          <Button size="4">Get Started</Button>
         </div>
       </div>
+
+      {/* Introduction Section */}
       <div className="flex flex-col items-center justify-center">
         <h1 className="font-bold text-4xl text-gray-700 text-center leading-normal py-20">
           Experience the Pinnacle of{" "}
@@ -38,25 +42,75 @@ const page = async () => {
           <br /> in Our Exquisite Rooms
         </h1>
       </div>
-      <div>
-        <h1 className="text-bold text-5xl text-gray-700 text-center">
-          Our Rooms
-        </h1>
-      </div>
+
+      {/* Why Choose Us Section */}
+      <section className="max-w-5xl mx-auto px-4 py-16">
+        <h2 className="text-3xl font-bold text-gray-800 text-center mb-8">
+          Why Choose Us?
+        </h2>
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+          <div className="text-center">
+            <Image
+              src="/icons/luxury.png"
+              alt="Luxury"
+              width={100}
+              height={100}
+              className="mx-auto"
+            />
+            <h3 className="text-xl font-semibold mt-4">Luxury</h3>
+            <p className="text-gray-600">
+              Enjoy top-tier amenities and unparalleled comfort.
+            </p>
+          </div>
+          <div className="text-center">
+            <Image
+              src="/icons/location.png"
+              alt="Prime Location"
+              width={100}
+              height={100}
+              className="mx-auto"
+            />
+            <h3 className="text-xl font-semibold mt-4">Prime Location</h3>
+            <p className="text-gray-600">
+              Stay in the heart of the city or near breathtaking landscapes.
+            </p>
+          </div>
+          <div className="text-center">
+            <Image
+              src="/icons/support.png"
+              alt="24/7 Support"
+              width={100}
+              height={100}
+              className="mx-auto"
+            />
+            <h3 className="text-xl font-semibold mt-4">24/7 Support</h3>
+            <p className="text-gray-600">
+              Our team is always available to assist you.
+            </p>
+          </div>
+        </div>
+      </section>
+
+      {/* Special Offers Section */}
       <section className="max-w-5xl mx-auto px-4 mt-12">
-        <div className="flex justify-between items-center py-10">
+        <div className="flex flex-col md:flex-row items-start justify-between md:items-center py-10 gap-y-4">
           <div className="flex flex-col gap-y-4">
             <h3 className="text-2xl text-sky-600">Special Offers</h3>
-            <h1 className="text-4xl font-semibold">Best offer of the month</h1>
+            <h1 className="text-4xl font-semibold">Best Offer of the Month</h1>
             <p className="max-w-2xl font-light">
-              Experience Fantastic Benefits and Obtain Better Rates When You
-              Make a Direct Booking on Our Official Website
+              Experience fantastic benefits and obtain better rates when you
+              book directly through our official website.
             </p>
           </div>
           <Button size="4">View All</Button>
         </div>
       </section>
+
+      {/* Our Rooms Section */}
       <section className="max-w-5xl mx-auto px-4 mt-12">
+        <h2 className="text-4xl font-bold text-gray-800 text-center mb-8">
+          Our Rooms
+        </h2>
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 justify-items-center">
           {rooms && rooms.length > 0 ? (
             rooms.map((room) => {
@@ -66,48 +120,20 @@ const page = async () => {
 
               return (
                 <Link key={room.$id} href={`/rooms/${room.$id}`}>
-                  <div
+                  <RoomCard
                     key={room.$id}
-                    className="flex flex-col bg-white rounded-lg shadow-lg overflow-hidden w-full max-w-xs h-[400px] hover:scale-105 transition-transform duration-300"
-                  >
-                    {/* Room Image */}
-                    <Image
-                      src={imageUrl}
-                      alt={room.name}
-                      width={400}
-                      height={250}
-                      className="w-full h-44 object-cover"
-                    />
-                    {/* Room Details */}
-                    <div className="p-4 flex flex-col justify-between flex-grow">
-                      <div>
-                        <p>Room</p>
-                        <div className="flex justify-between items-center">
-                          <h3 className="text-lg font-semibold text-gray-800">
-                            {room.name}
-                          </h3>
-                          <div className="flex justify-center items-center">
-                            <p className="text-gray-600 text-sm">
-                              Capacity: <strong>{room.capacity}</strong>
-                            </p>
-                            <PersonIcon />
-                          </div>
-                        </div>
-                        <p className="text-sm text-gray-500 mt-4 line-clamp-3">
-                          {room.description}
-                        </p>
-                      </div>
-                      <div className="mt-4">
-                        <h2 className="text-4xl text-center font-bold text-sky-600">
-                          ${room.price_per_hour}
-                          <span className="text-sm text-gray-500 font-light">
-                            {" "}
-                            / night
-                          </span>
-                        </h2>
-                      </div>
-                    </div>
-                  </div>
+                    user_id={room.user_Id}
+                    name={room.name}
+                    description={room.description}
+                    sqft={room.sqft}
+                    capacity={room.capacity}
+                    location={room.location}
+                    address={room.address}
+                    amenities={room.amenities}
+                    availability={room.availability}
+                    price_per_hour={room.price_per_hour}
+                    image={imageUrl}
+                  />
                 </Link>
               );
             })

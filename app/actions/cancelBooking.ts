@@ -13,9 +13,9 @@ async function cancelBooking(bookedId: string) {
   }
 
   const databaseId = process.env.NEXT_PUBLIC_APPWRITE_DATABASE;
-  const collectionId = process.env.NEXT_PUBLIC_APPWRITE_COLLECTION_BOOKINGS;
+  const bookingsId = process.env.NEXT_PUBLIC_APPWRITE_COLLECTION_BOOKINGS;
 
-  if (!databaseId || !collectionId) {
+  if (!databaseId || !bookingsId) {
     throw new Error(
       "Appwrite database or collection environment variables are missing."
     );
@@ -38,7 +38,7 @@ async function cancelBooking(bookedId: string) {
     // Get the booking
     const booking = await databases.getDocument(
       databaseId,
-      collectionId,
+      bookingsId,
       bookedId
     );
 
@@ -52,7 +52,7 @@ async function cancelBooking(bookedId: string) {
     }
 
     // Delete booking
-    await databases.deleteDocument(databaseId, collectionId, bookedId);
+    await databases.deleteDocument(databaseId, bookingsId, bookedId);
 
     revalidatePath("/bookings", "layout");
 

@@ -1,5 +1,4 @@
 "use client";
-import { Button } from "@radix-ui/themes";
 import Image from "next/image";
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
@@ -10,6 +9,7 @@ import { useAuth } from "@/context/authContext";
 
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 import { MenuIcon } from "lucide-react";
+import { Button } from "@/components/ui/button";
 
 const Links = [
   { label: "Home", href: "/" },
@@ -104,29 +104,34 @@ text-white drop-shadow-xl"
 
       {/* Mobile Navbar */}
       <Sheet>
-        <SheetTrigger asChild>
-          <div className="flex lg:hidden justify-between py-4 px-10 bg-white w-full items-center">
+        <SheetTrigger asChild dir="right">
+          <div className="flex lg:hidden justify-between py-6 px-10 bg-white items-center mx-5 rounded-2xl mt-4">
+            <Image
+              src="/hotel_logo.svg"
+              width={50}
+              height={21}
+              alt="Hotel Logo"
+            />
             <div className="flex items-center gap-x-4">
               <Button variant="ghost" aria-label="Open Menu">
-                <MenuIcon />
+                <MenuIcon
+                  style={{ width: "30px", height: "30px", color: "black" }}
+                />
               </Button>
-              <Image
-                src="/hotel_logo.svg"
-                width={39}
-                height={21}
-                alt="Hotel Logo"
-              />
             </div>
-            <p>{currentUser?.name}</p>
           </div>
         </SheetTrigger>
-        <SheetContent className="bg-gray-100 flex flex-col h-full">
+        <SheetContent side="left" className="flex flex-col h-full">
           <div className="flex flex-col space-y-4 mt-6">
             {Links.map((link) => (
               <Link
                 key={link.label}
                 href={link.href}
-                className="text-lg font-medium text-blue-600 hover:text-white hover:bg-blue-600 py-2 px-4 rounded-lg transition duration-300"
+                className={`${
+                  currentPath === link.href
+                    ? "bg-blue-50 text-blue-600"
+                    : "text-gray-400"
+                } block p-4 text-lg font-semibold  hover:bg-blue-50 hover:text-blue-600 rounded`}
               >
                 {link.label}
               </Link>
@@ -136,15 +141,17 @@ text-white drop-shadow-xl"
           <div className="mt-auto w-full flex flex-col gap-4 items-center border-t border-gray-300 pt-4">
             {!isAuthenticated ? (
               <div className="w-full flex flex-col items-center gap-4">
-                <Link href="/sign-in">
-                  <Button variant="solid" className="!w-full !py-2 !rounded-md">
-                    Sign In
-                  </Button>
+                <Link
+                  href="/sign-in"
+                  className="w-full block px-4 py-5  leading-loose text-white text-xs text-center font-semibold leading-none bg-blue-600 hover:bg-blue-700 rounded-l-xl rounded-t-xl"
+                >
+                  Sign In
                 </Link>
-                <Link href="/sign-up">
-                  <Button variant="solid" className="!w-full !py-2 !rounded-md">
-                    Sign Up
-                  </Button>
+                <Link
+                  href="/sign-up"
+                  className="w-full block px-4 py-5 mb-3 leading-loose text-white text-xs text-center font-semibold leading-none bg-blue-600 hover:bg-blue-700 rounded-l-xl rounded-t-xl"
+                >
+                  Sign Up
                 </Link>
               </div>
             ) : (
@@ -153,9 +160,7 @@ text-white drop-shadow-xl"
                   {currentUser?.name}
                 </p>
                 <Button
-                  variant="solid"
-                  className="!w-full !py-2 !rounded-md"
-                  color="red"
+                  className="text-center w-full block px-4 py-5 leading-loose text-white text-xs  font-semibold leading-none bg-red-600 hover:bg-red-700 rounded-l-xl rounded-t-xl"
                   onClick={handleLogout}
                 >
                   Sign Out
