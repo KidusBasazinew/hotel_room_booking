@@ -81,7 +81,7 @@ const ThankYou = () => {
                       <Image
                         fill
                         src={imageURL}
-                        alt="product image"
+                        alt="room image"
                         className="flex-none rounded-md bg-gray-100 object-cover object-center"
                       />
                     )}
@@ -130,7 +130,7 @@ const ThankYou = () => {
 
               <div className="mt-16 border-t border-gray-200 py-6 text-right">
                 <Link
-                  href="/products"
+                  href="/rooms"
                   className="text-sm font-medium text-blue-600 hover:text-blue-500"
                 >
                   Continue &rarr;

@@ -1,9 +1,9 @@
 "use server";
-import { PersonIcon } from "@radix-ui/react-icons";
+
 import { Button } from "@radix-ui/themes";
 import React from "react";
 import getAllRooms from "../actions/getAllRooms";
-import Image from "next/image";
+
 import Link from "next/link";
 import RoomCard from "../components/RoomCard";
 
@@ -30,11 +30,12 @@ const RoomsSection = async () => {
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 justify-items-center">
         {rooms && rooms.length > 0 ? (
           rooms.slice(0, 3).map((room, index) => {
+            console.log(room.created_at);
             const imageUrl = room.image
               ? `https://cloud.appwrite.io/v1/storage/buckets/${bucketId}/files/${room.image}/view?project=${projectId}`
               : "/images/no-image.jpg";
             if (!room) return null;
-            console.log(room);
+            // console.log(room);
             return (
               <Link key={room.$id} href={`/rooms/${room.$id}`}>
                 <RoomCard
@@ -50,6 +51,7 @@ const RoomsSection = async () => {
                   availability={room.availability}
                   price_per_hour={room.price_per_hour}
                   image={imageUrl}
+                  created_at={room.created_at}
                 />
               </Link>
             );

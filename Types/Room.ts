@@ -11,4 +11,5 @@ export type Room = {
   availability: string;
   price_per_hour: number;
   image: string;
+  // created_at: string;
 };

@@ -4,6 +4,10 @@ import checkAuth from "./checkAuth";
 import { ID, Models } from "node-appwrite";
 import { revalidatePath } from "next/cache";
 
+interface ErrorWithMessage {
+  response?: { message: string };
+}
+
 type CreateRoomResponse = {
   success?: boolean;
   error?: string;
@@ -79,6 +83,7 @@ async function createRoom(
         price_per_hour: formData.get("price_per_hour") as string,
         amenities: formData.get("amenities") as string,
         image: imageID,
+        created_at: new Date().toISOString(),
       }
     );
 
@@ -88,10 +93,11 @@ async function createRoom(
       success: true,
       roomData: newRoom,
     };
-  } catch (error: any) {
-    console.log(error);
+  } catch (error) {
+    const typedError = error as ErrorWithMessage;
+    console.log(typedError);
     const errorMessage =
-      error.response?.message || "An unexpected error has occurred";
+      typedError.response?.message || "An unexpected error has occurred";
     return {
       error: errorMessage,
     };

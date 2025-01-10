@@ -2,7 +2,6 @@ import React from "react";
 
 import Image from "next/image";
 import { Button } from "@radix-ui/themes";
-import { PersonIcon } from "@radix-ui/react-icons";
 import getAllRooms from "../actions/getAllRooms";
 import Link from "next/link";
 import RoomCard from "../components/RoomCard";
@@ -133,6 +132,7 @@ const page = async () => {
                     availability={room.availability}
                     price_per_hour={room.price_per_hour}
                     image={imageUrl}
+                    created_at={room.created_at}
                   />
                 </Link>
               );
