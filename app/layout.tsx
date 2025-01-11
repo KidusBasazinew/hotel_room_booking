@@ -7,7 +7,15 @@ import Navbar from "./Navbar";
 import Footer from "./Footer";
 
 import AuthWrapper from "./components/AuthWrapper";
+
 // import { Theme } from "@radix-ui/themes";
+
+import { Roboto } from "next/font/google";
+
+const roboto = Roboto({
+  weight: ["400", "700"],
+  subsets: ["latin"],
+});
 
 const geistSans = localFont({
   src: "./fonts/GeistVF.woff",
@@ -33,7 +41,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased relative`}
+        className={`${roboto.className} ${geistSans.variable} ${geistMono.variable} antialiased relative`}
       >
         <Theme>
           <AuthWrapper>

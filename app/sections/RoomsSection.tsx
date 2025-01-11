@@ -30,7 +30,6 @@ const RoomsSection = async () => {
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 justify-items-center">
         {rooms && rooms.length > 0 ? (
           rooms.slice(0, 3).map((room, index) => {
-            console.log(room.created_at);
             const imageUrl = room.image
               ? `https://cloud.appwrite.io/v1/storage/buckets/${bucketId}/files/${room.image}/view?project=${projectId}`
               : "/images/no-image.jpg";

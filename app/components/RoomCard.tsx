@@ -8,7 +8,7 @@ import {
 import { Badge } from "@radix-ui/themes";
 import { MapPin } from "lucide-react";
 import Image from "next/image";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 interface Props {
   user_id: string;
@@ -34,9 +34,15 @@ export default function RoomCard({
 }: Props) {
   const createdAt = new Date(created_at); // Create Date from the string
   const isNew =
-    (new Date().getTime() - createdAt.getTime()) / (1000 * 60 * 60 * 24) < 1; // Check if less than 7 days
+    (new Date().getTime() - createdAt.getTime()) / (1000 * 60 * 60 * 24) < 7; // Check if less than 7 days
 
   const [isliked, setLike] = useState(false);
+
+  const [rating, setRating] = useState(0);
+  useEffect(() => {
+    const rate = Math.floor(Math.random() * 50);
+    setRating(rate);
+  }, []);
 
   const handleLikeClick = (e: React.MouseEvent) => {
     e.stopPropagation(); // Prevent the event from bubbling up to the parent Link
@@ -55,7 +61,7 @@ export default function RoomCard({
           height={400}
         />
         <div className="absolute top-2 left-2 bg-red-500 text-white text-xs font-semibold px-2 py-1 rounded">
-          -{Math.floor(Math.random() * 50)}% today
+          -{rating}% discount
         </div>
         <div className="absolute top-2 right-2">
           <div className="p-2 bg-white rounded">
