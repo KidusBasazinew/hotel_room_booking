@@ -16,7 +16,7 @@ const FillterDropdown = ({ title, options }: DropdownProps) => {
     <div className="m-4">
       {/* Header Section */}
       <div
-        className="flex justify-between items-center py-2 cursor-pointer"
+        className="flex justify-between items-center py-2 cursor-pointer rounded-full "
         onClick={toggleDropdown}
       >
         <h1 className="font-semibold">{title}</h1>

@@ -1,151 +1,146 @@
-import React from "react";
-
+import { Button } from "@/components/ui/button";
+import { ArrowDown, Info, MapIcon } from "lucide-react";
 import Image from "next/image";
-import { Button } from "@radix-ui/themes";
-import getAllRooms from "../actions/getAllRooms";
-import Link from "next/link";
-import RoomCard from "../components/RoomCard";
 
-const page = async () => {
-  const rooms = await getAllRooms();
+import FillterDropdown from "../components/FillterDropdown";
+import RoomsCard from "../components/RoomsCard";
+import getAllRooms from "../actions/getAllRooms";
+import Pagination from "../components/Pagination";
+import NoThingIsHere from "../components/NoThingIsHere";
+
+const ServicesList = [
+  { label: "Dining", imageSrc: "/dining.jpg" },
+  { label: "Room", imageSrc: "/rooms/room-2.jpg" },
+  { label: "Service & Facilities", imageSrc: "/rooms/service-facilitys.jpg" },
+  { label: "Conferences & Meetings", imageSrc: "/rooms/room-3.jpg" },
+  { label: "Wedding Package", imageSrc: "/rooms/wedding.jpg" },
+];
+
+interface SearchParamsProps {
+  searchParams: { page: string };
+}
+
+const Page = async ({ searchParams }: SearchParamsProps) => {
+  const currentPage = parseInt(searchParams.page || "1");
+  const pageSize = 2;
+
+  // Fetch paginated rooms
+  const rooms = await getAllRooms({ page: currentPage, pageSize });
+  console.log(rooms.length);
 
   const bucketId = process.env.NEXT_PUBLIC_APPWRITE_ROOMS_STORAGE_BOOKING;
   const projectId = process.env.NEXT_PUBLIC_APPWRITE_PROJECT;
 
+  const startIndex = (currentPage - 1) * pageSize;
+  const endIndex = startIndex + pageSize;
+  const currentRooms = rooms.slice(startIndex, endIndex); // Get rooms for the current page
+
   return (
-    <>
-      {/* Banner Section */}
-      <div className="relative">
-        <Image
-          src="/banner/image_03.jpg"
-          className="w-full h-96 object-cover"
-          alt=""
-          width={1200}
-          height={200}
-        />
-        <div className="absolute inset-0 bg-black opacity-40"></div>
-        <div className="flex flex-col items-center gap-y-4 absolute mt-10 top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2">
-          <h1 className="font-bold text-4xl md:text-5xl text-white text-center">
-            Discover Your Perfect Stay with Us
-          </h1>
-          <Button size="4">Get Started</Button>
+    <div className="bg-[#f2f2f2] max-w-7xl  mx-3 lg:mx-auto grid grid-cols-1 gap-4 mt-40 lg:grid-cols-3 lg:grid-rows-1 lg:grid-flow-col">
+      {/* Filter Section on the Left */}
+      <div className="lg:col-span-1 lg:row-span-3">
+        <div className="bg-sky-200 w-full py-20 flex justify-center items-center">
+          <Button className="bg-white  border-slate-900 rounded-full text-slate-900 hover:text-white">
+            <MapIcon />
+            View map
+          </Button>
+        </div>
+        <div className="m-4 flex flex-row lg:flex-col">
+          <FillterDropdown
+            title="Popular"
+            options={[
+              { id: "wifi", label: "Free Wifi" },
+              { id: "luxury", label: "Luxury" },
+              { id: "pool", label: "Pool" },
+            ]}
+          />
+          <FillterDropdown
+            title="Amenities"
+            options={[
+              { id: "wifi", label: "Free Wifi" },
+              { id: "luxury", label: "Breakfast Included" },
+              { id: "pool", label: "Pool" },
+              { id: "restaurant", label: "Restaurant" },
+            ]}
+          />
         </div>
       </div>
 
-      {/* Introduction Section */}
-      <div className="flex flex-col items-center justify-center">
-        <h1 className="font-bold text-4xl text-gray-700 text-center leading-normal py-20">
-          Experience the Pinnacle of{" "}
-          <span className="text-sky-600">Luxury</span> and{" "}
-          <span className="text-sky-600">Comfort</span>
-          <br /> in Our Exquisite Rooms
-        </h1>
+      {/* Wedding Images Section */}
+      <div className="lg:col-span-2 flex gap-4">
+        {ServicesList.map((service) => (
+          <div
+            key={service.label}
+            className="relative flex justify-center items-center rounded-md shadow-md shadow-gray-400 overflow-hidden"
+          >
+            <div className="absolute inset-0 bg-gradient-to-t from-black to-transparent opacity-70 hover:opacity-100 transition-opacity"></div>
+            <Image
+              src={service.imageSrc}
+              alt="Wedding Room"
+              width={400}
+              height={450}
+              className="object-cover w-full h-full"
+            />
+            <p className="absolute bottom-0 text-sm lg:text-xl text-white mb-6">
+              {service.label}
+            </p>
+          </div>
+        ))}
       </div>
 
-      {/* Why Choose Us Section */}
-      <section className="max-w-5xl mx-auto px-4 py-16">
-        <h2 className="text-3xl font-bold text-gray-800 text-center mb-8">
-          Why Choose Us?
-        </h2>
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-          <div className="text-center">
-            <Image
-              src="/icons/luxury.png"
-              alt="Luxury"
-              width={100}
-              height={100}
-              className="mx-auto"
-            />
-            <h3 className="text-xl font-semibold mt-4">Luxury</h3>
-            <p className="text-gray-600">
-              Enjoy top-tier amenities and unparalleled comfort.
-            </p>
-          </div>
-          <div className="text-center">
-            <Image
-              src="/icons/location.png"
-              alt="Prime Location"
-              width={100}
-              height={100}
-              className="mx-auto"
-            />
-            <h3 className="text-xl font-semibold mt-4">Prime Location</h3>
-            <p className="text-gray-600">
-              Stay in the heart of the city or near breathtaking landscapes.
-            </p>
-          </div>
-          <div className="text-center">
-            <Image
-              src="/icons/support.png"
-              alt="24/7 Support"
-              width={100}
-              height={100}
-              className="mx-auto"
-            />
-            <h3 className="text-xl font-semibold mt-4">24/7 Support</h3>
-            <p className="text-gray-600">
-              Our team is always available to assist you.
-            </p>
+      {/* Rooms Cards Section */}
+      <div className="lg:col-span-2 space-y-4">
+        <div className="flex justify-between items-center">
+          <h1>1 property in Bolifushi Island</h1>
+          <div className="flex items-center gap-x-2">
+            <p>Sort by:</p>
+            <Button className="rounded-full bg-white hover:text-white text-slate-900">
+              Best Of <ArrowDown />
+            </Button>
+            <Info />
           </div>
         </div>
-      </section>
-
-      {/* Special Offers Section */}
-      <section className="max-w-5xl mx-auto px-4 mt-12">
-        <div className="flex flex-col md:flex-row items-start justify-between md:items-center py-10 gap-y-4">
-          <div className="flex flex-col gap-y-4">
-            <h3 className="text-2xl text-sky-600">Special Offers</h3>
-            <h1 className="text-4xl font-semibold">Best Offer of the Month</h1>
-            <p className="max-w-2xl font-light">
-              Experience fantastic benefits and obtain better rates when you
-              book directly through our official website.
-            </p>
-          </div>
-          <Button size="4">View All</Button>
-        </div>
-      </section>
-
-      {/* Our Rooms Section */}
-      <section className="max-w-5xl mx-auto px-4 mt-12">
-        <h2 className="text-4xl font-bold text-gray-800 text-center mb-8">
-          Our Rooms
-        </h2>
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 justify-items-center">
-          {rooms && rooms.length > 0 ? (
-            rooms.map((room) => {
-              const imageUrl = room.image
-                ? `https://cloud.appwrite.io/v1/storage/buckets/${bucketId}/files/${room.image}/view?project=${projectId}`
-                : "/images/no-image.jpg";
-
-              return (
-                <Link key={room.$id} href={`/rooms/${room.$id}`}>
-                  <RoomCard
-                    key={room.$id}
-                    user_id={room.user_Id}
-                    name={room.name}
-                    description={room.description}
-                    sqft={room.sqft}
-                    capacity={room.capacity}
-                    location={room.location}
-                    address={room.address}
-                    amenities={room.amenities}
-                    availability={room.availability}
-                    price_per_hour={room.price_per_hour}
-                    image={imageUrl}
-                    created_at={room.created_at}
-                  />
-                </Link>
-              );
-            })
-          ) : (
-            <h2 className="text-center text-xl text-gray-600">
-              No rooms available!
-            </h2>
-          )}
-        </div>
-      </section>
-    </>
+        {rooms.length > 0 ? (
+          currentRooms.map((room) => {
+            const imageUrl = room.image
+              ? `https://cloud.appwrite.io/v1/storage/buckets/${bucketId}/files/${room.image}/view?project=${projectId}`
+              : "/images/no-image.jpg";
+            return (
+              <RoomsCard
+                key={room.id}
+                user_id={room.user_Id}
+                name={room.name}
+                description={room.description}
+                sqft={room.sqft}
+                capacity={room.capacity}
+                location={room.location}
+                address={room.address}
+                amenities={room.amenities}
+                availability={room.availability}
+                price_per_hour={room.price_per_hour}
+                image={imageUrl}
+                created_at={room.created_at}
+                link={`/rooms/${room.$id}`}
+              />
+            );
+          })
+        ) : (
+          <NoThingIsHere label={"No rooms available."} />
+        )}
+      </div>
+      <div className="lg:col-span-2 my-6">
+        {rooms.length > 0 ? (
+          <Pagination
+            itemCount={rooms.length}
+            pageSize={pageSize}
+            currentPage={currentPage}
+          />
+        ) : (
+          <p>No rooms available.</p>
+        )}
+      </div>
+    </div>
   );
 };
 
-export default page;
+export default Page;

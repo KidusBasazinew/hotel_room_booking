@@ -1,6 +1,7 @@
 import getMyBookings from "../actions/getMyBookings";
 import Image from "next/image";
 import CancelBookingButton from "../components/CancelBookingButton";
+import NoThingIsHere from "../components/NoThingIsHere";
 
 const page = async () => {
   const room = await getMyBookings();
@@ -80,7 +81,7 @@ const page = async () => {
           );
         })
       ) : (
-        <p className="text-gray-500 text-center">No bookings found.</p>
+        <NoThingIsHere label={" No bookings found."}></NoThingIsHere>
       )}
     </div>
   );

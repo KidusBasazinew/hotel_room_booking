@@ -3,6 +3,8 @@ import React from "react";
 import Image from "next/image";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@radix-ui/themes";
+import Link from "next/link";
+
 interface Props {
   user_id: string;
   name: string;
@@ -16,6 +18,7 @@ interface Props {
   price_per_hour: number;
   image: string;
   created_at: string;
+  link: string;
 }
 const RoomsCard = ({
   name,
@@ -24,6 +27,7 @@ const RoomsCard = ({
   // price_per_hour,
   image,
   created_at,
+  link,
 }: Props) => {
   const createdAt = new Date(created_at);
   const year = createdAt.getFullYear();
@@ -61,13 +65,14 @@ const RoomsCard = ({
         </div>
       </div>
       <div className="p-4 w-full  lg:flex flex-col gap-y-2 hidden items-center justify-center">
-        <Button
-          size="lg"
-          className="rounded-full bg-yellow-500 hover:bg-yellow-300 text-slate-900 "
-        >
-          Show prices
-        </Button>
-
+        <Link href={link}>
+          <Button
+            size="lg"
+            className="rounded-full bg-yellow-500 hover:bg-yellow-300 text-slate-900 "
+          >
+            Show prices
+          </Button>
+        </Link>
         <p className="text-gray-600 mb-2">Enter dates to see prices</p>
       </div>
       <div className="p-4 w-full">
@@ -93,13 +98,15 @@ const RoomsCard = ({
           <span className="font-bold ">Description:</span> {description}
         </p>
         <div className="block lg:hidden space-y-2">
-          <Button
-            size="lg"
-            className="rounded-full bg-yellow-500 hover:bg-yellow-300 text-slate-900 "
-          >
-            Show prices
-          </Button>
-          <p className="text-gray-600 mb-2">Enter dates to see prices</p>
+          <Link href={link}>
+            <Button
+              size="lg"
+              className="rounded-full bg-yellow-500 hover:bg-yellow-300 text-slate-900 "
+            >
+              Show prices
+            </Button>
+            <p className="text-gray-600 mb-2">Enter dates to see prices</p>
+          </Link>
         </div>
         <a href="#" className="text-blue-500 font-bold">
           Visit hotel website
