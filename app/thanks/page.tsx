@@ -1,8 +1,9 @@
 "use client";
+import { Suspense, useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { useSearchParams } from "next/navigation";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 
 const ThankYou = () => {
   const searchParams = useSearchParams();
@@ -18,7 +19,6 @@ const ThankYou = () => {
   const availability = searchParams.get("availability");
   const amenities = searchParams.get("amenities");
   const imageID = searchParams.get("imageId");
-  console.log(imageID);
 
   const [imageURL, setImageURL] = useState<string | null>(null);
   const bucketId = process.env.NEXT_PUBLIC_APPWRITE_ROOMS_STORAGE_BOOKING;
@@ -144,4 +144,10 @@ const ThankYou = () => {
   );
 };
 
-export default ThankYou;
+export default function Home() {
+  return (
+    <Suspense fallback={<div>Loading...</div>}>
+      <ThankYou />
+    </Suspense>
+  );
+}

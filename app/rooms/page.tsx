@@ -108,6 +108,7 @@ const Page = async ({ searchParams }: SearchParamsProps) => {
             return (
               <RoomsCard
                 key={room.id}
+                id={room.id}
                 user_id={room.user_Id}
                 name={room.name}
                 description={room.description}

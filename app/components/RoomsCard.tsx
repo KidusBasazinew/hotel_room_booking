@@ -6,6 +6,7 @@ import { Badge } from "@radix-ui/themes";
 import Link from "next/link";
 
 interface Props {
+  id: string;
   user_id: string;
   name: string;
   description: string;
@@ -20,7 +21,7 @@ interface Props {
   created_at: string;
   link: string;
 }
-const RoomsCard = ({
+const RoomsCard = async ({
   name,
   description,
   // address,
@@ -64,6 +65,9 @@ const RoomsCard = ({
           <i className="fas fa-heart text-white text-xl"></i>
         </div>
       </div>
+
+      <p>5</p>
+
       <div className="p-4 w-full  lg:flex flex-col gap-y-2 hidden items-center justify-center">
         <Link href={link}>
           <Button
