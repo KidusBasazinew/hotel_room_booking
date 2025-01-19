@@ -1,22 +1,9 @@
+"use server";
 import { createAdminClient } from "@/config/appwrite";
 import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
 
-interface Filters {
-  [key: string]: string | number | boolean;
-}
-
-interface GetAllRoomsParams {
-  filters?: Filters;
-  page?: number;
-  pageSize?: number;
-}
-
-async function getAllRooms({
-  filters = {},
-  page = 1,
-  pageSize = 10,
-}: GetAllRoomsParams) {
+async function getAllRooms({ filters = {}, page = 1, pageSize = 10 }) {
   try {
     const { databases } = await createAdminClient();
 
@@ -29,7 +16,6 @@ async function getAllRooms({
       );
     }
 
-    // Explicitly define the type of the query array
     const query: string[] = [];
 
     // Add filtering based on the provided filters object
@@ -37,10 +23,12 @@ async function getAllRooms({
       query.push(`${key}=${value}`);
     });
 
-    // Add pagination to the query
-    query.push(`offset=${(page - 1) * pageSize}`);
-    query.push(`limit=${pageSize}`);
-
+    // Calculate the offset and limit for pagination
+    const offset = (page - 1) * pageSize;
+    const limit = pageSize;
+    // Add limit and offset to the query array
+    query.push(`limit=${limit}`);
+    query.push(`offset=${offset}`);
     // Fetch the rooms documents from the database with the filtering and pagination
     const { documents: rooms } = await databases.listDocuments(
       databaseId,
