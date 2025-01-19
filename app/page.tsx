@@ -1,4 +1,4 @@
-// import RoomsSection from "./sections/RoomsSection";
+import RoomsSection from "./sections/RoomsSection";
 import BookNowSection from "./sections/BookNowSection";
 import BannerSection from "./sections/BannerSection";
 import ServicesSection from "./sections/ServicesSection";
@@ -20,7 +20,7 @@ export default function Home() {
 
       <ServicesSection />
 
-      {/* <RoomsSection /> */}
+      <RoomsSection />
 
       <JoinOurTeamSection />
 
