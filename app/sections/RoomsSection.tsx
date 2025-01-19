@@ -6,7 +6,7 @@ import Link from "next/link";
 import RoomCard from "../components/RoomCard";
 
 const RoomsSection = async () => {
-  const rooms = await getAllRooms({ filters: {}, page: 1, pageSize: 10 });
+  const rooms = await getAllRooms();
 
   const bucketId = process.env.NEXT_PUBLIC_APPWRITE_ROOMS_STORAGE_BOOKING;
   const projectId = process.env.NEXT_PUBLIC_APPWRITE_PROJECT;

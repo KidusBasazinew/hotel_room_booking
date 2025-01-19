@@ -66,8 +66,6 @@ const RoomsCard = async ({
         </div>
       </div>
 
-      <p>5</p>
-
       <div className="p-4 w-full  lg:flex flex-col gap-y-2 hidden items-center justify-center">
         <Link href={link}>
           <Button

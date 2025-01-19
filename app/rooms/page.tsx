@@ -25,7 +25,7 @@ const Page = async ({ searchParams }: SearchParamsProps) => {
   const pageSize = 2;
 
   // Fetch paginated rooms
-  const rooms = await getAllRooms({ page: currentPage, pageSize });
+  const rooms = await getAllRooms();
   console.log(rooms.length);
 
   const bucketId = process.env.NEXT_PUBLIC_APPWRITE_ROOMS_STORAGE_BOOKING;

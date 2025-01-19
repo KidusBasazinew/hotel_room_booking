@@ -3,7 +3,7 @@ import { createAdminClient } from "@/config/appwrite";
 import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
 
-async function getAllRooms({ filters = {}, page = 1, pageSize = 10 }) {
+async function getAllRooms() {
   try {
     const { databases } = await createAdminClient();
 
@@ -16,23 +16,13 @@ async function getAllRooms({ filters = {}, page = 1, pageSize = 10 }) {
       );
     }
 
-    const queries: string[] = [];
-
-    // Manually build queries for filtering
-    Object.entries(filters).forEach(([key, value]) => {
-      queries.push(`filter[${key}]=${value}`);
-    });
-
-    // Add pagination parameters to queries
-    queries.push(`limit=${pageSize}`);
-    queries.push(`offset=${(page - 1) * pageSize}`);
-
-    // Fetch documents from the database
+    // Fetch documents from Appwrite
     const { documents: rooms } = await databases.listDocuments(
       databaseId,
-      collectionId,
-      queries
+      collectionId
     );
+
+    console.log("Fetched Rooms:", rooms);
 
     // Revalidate cache
     revalidatePath("/", "layout");
