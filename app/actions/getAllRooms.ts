@@ -16,31 +16,30 @@ async function getAllRooms({ filters = {}, page = 1, pageSize = 10 }) {
       );
     }
 
-    const query: string[] = [];
+    const queries: string[] = [];
 
-    // Add filtering based on the provided filters object
+    // Manually build queries for filtering
     Object.entries(filters).forEach(([key, value]) => {
-      query.push(`${key}=${value}`);
+      queries.push(`filter[${key}]=${value}`);
     });
 
-    // Calculate the offset and limit for pagination
-    const offset = (page - 1) * pageSize;
-    const limit = pageSize;
-    // Add limit and offset to the query array
-    query.push(`limit=${limit}`);
-    query.push(`offset=${offset}`);
-    // Fetch the rooms documents from the database with the filtering and pagination
+    // Add pagination parameters to queries
+    queries.push(`limit=${pageSize}`);
+    queries.push(`offset=${(page - 1) * pageSize}`);
+
+    // Fetch documents from the database
     const { documents: rooms } = await databases.listDocuments(
       databaseId,
       collectionId,
-      query
+      queries
     );
 
+    // Revalidate cache
     revalidatePath("/", "layout");
 
     return rooms;
   } catch (error) {
-    console.log("Failed to get rooms", error);
+    console.error("Failed to get rooms:", error);
     redirect("/error");
   }
 }
